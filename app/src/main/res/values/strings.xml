@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Tatiana Ryabova</string>
+    <string name="bmstu_student">Student of the faculty "Mechanical Engineering"</string>
+    <string name="about_text">Tatiana finished AESC MSU in 2017 and began to study in BMSTU. Her specialization is "Engineering of space vehicles and launch vehicles".
+                              She is also a member of the university hand-to-hand combat team.</string>
+    <string name="edit">Enter a message...</string>
+    <string name="button">SEND MESSAGE</string>
+    <string name="subject">Business Message</string>
+    <string name="sendto">tanya.hedgehog@gmail.com</string>
+    <string name="developer">© 2018 KECompany</string>
+</resources>
+

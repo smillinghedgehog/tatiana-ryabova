@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Рябова Татьяна</string>
+    <string name="bmstu_student">Студент факультета Специальное Машиностроение</string>
+    <string name="about_text">Татьяна окончила СУНЦ МГУ в 2017 году и начала своё обучение в МГТУ им. Н.Э. Баумана. Её специализация - Конструирование космических аппаратов и ракет-носителей. Она также является членом университетской сборной по рукопашному бою.</string>
+    <string name="edit">Напишите сообщение...</string>
+    <string name="button">ОТПРАВИТЬ</string>
+    <string name="subject">Бизнесс</string>
+    <string name="developer">© 2018 KECompany</string>
+    <string name="sendto">tanya.hedgehog@gmail.com</string>
+</resources>
