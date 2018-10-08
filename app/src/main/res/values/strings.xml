@@ -8,5 +8,7 @@
     <string name="subject">Business Message</string>
     <string name="sendto">tanya.hedgehog@gmail.com</string>
     <string name="developer">© 2018 KECompany</string>
+    <string name="news_activity">NY Times</string>
+    <string name="about_activity">About</string>
 </resources>
 

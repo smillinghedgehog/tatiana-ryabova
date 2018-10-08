@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.tanya.tatianaryabova">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/hedgehog"
@@ -9,13 +11,19 @@
         android:roundIcon="@drawable/hedgehog"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity
+            android:name=".AboutActivity"
+            android:label="@string/about_activity"></activity>
+        <activity
+            android:name=".NewsListActivity"
+            android:label="@string/news_activity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".NewsItem"></activity>
     </application>
 
 </manifest>
