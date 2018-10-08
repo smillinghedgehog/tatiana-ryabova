@@ -1,14 +1,18 @@
 package com.example.tanya.tatianaryabova;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Display;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.Surface;
+import android.view.WindowManager;
 
 public class NewsListActivity extends AppCompatActivity {
 
@@ -19,7 +23,14 @@ public class NewsListActivity extends AppCompatActivity {
 
         RecyclerView recyclerView = findViewById(R.id.news_activity);
         recyclerView.setAdapter(new NewsRecyclerAdapter(this, DataUtils.generateNews()));
-        recyclerView.setLayoutManager(new GridLayoutManager(this, 1));
+
+        Display display = ((WindowManager) getSystemService(WINDOW_SERVICE)).getDefaultDisplay();
+        int spanCount = 2;
+        if (display.getOrientation() == Surface.ROTATION_0){
+            spanCount = 1;
+        }
+
+        recyclerView.setLayoutManager(new GridLayoutManager(this, spanCount));
     }
 
     @Override
