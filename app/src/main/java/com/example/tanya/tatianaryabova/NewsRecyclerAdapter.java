@@ -1,6 +1,7 @@
 package com.example.tanya.tatianaryabova;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateUtils;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
@@ -28,7 +30,7 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapte
         inflater = LayoutInflater.from(context);
     }
 
-    static class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         public final ImageView photoView;
         public final TextView category;
         public final TextView title;
@@ -42,7 +44,21 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapte
             title = itemView.findViewById(R.id.title);
             preview = itemView.findViewById(R.id.preview_news);
             date = itemView.findViewById(R.id.date);
+            itemView.setOnClickListener(this);
         }
+
+        @Override
+        public void onClick(View view){
+            int position = getLayoutPosition();
+            openFullNews(position);
+        }
+
+        private void openFullNews(int position){
+            Intent openFull = new Intent(context, FullNewsActivity.class);
+            openFull.putExtra("POSITION", position);
+            context.startActivity(openFull);
+        }
+
     }
 
     @Override

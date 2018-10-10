@@ -12,7 +12,9 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.Surface;
+import android.view.View;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 
 public class NewsListActivity extends AppCompatActivity {
 
@@ -22,7 +24,8 @@ public class NewsListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_news_list);
 
         RecyclerView recyclerView = findViewById(R.id.news_activity);
-        recyclerView.setAdapter(new NewsRecyclerAdapter(this, DataUtils.generateNews()));
+        NewsRecyclerAdapter adapter = new NewsRecyclerAdapter(this, DataUtils.generateNews());
+        recyclerView.setAdapter(adapter);
 
         Display display = ((WindowManager) getSystemService(WINDOW_SERVICE)).getDefaultDisplay();
         int spanCount = 2;
@@ -49,4 +52,6 @@ public class NewsListActivity extends AppCompatActivity {
         }
         return true;
     }
+
+
 }

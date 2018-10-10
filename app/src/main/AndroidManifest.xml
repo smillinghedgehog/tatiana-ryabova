@@ -13,7 +13,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".AboutActivity"
-            android:label="@string/about_activity"></activity>
+            android:label="@string/about_activity" />
         <activity
             android:name=".NewsListActivity"
             android:label="@string/news_activity">
@@ -23,7 +23,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".NewsItem"></activity>
+        <activity android:name=".NewsItem" />
+        <activity android:name=".FullNewsActivity"></activity>
     </application>
 
 </manifest>
