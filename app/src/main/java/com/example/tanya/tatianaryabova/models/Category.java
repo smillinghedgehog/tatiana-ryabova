@@ -1,4 +1,4 @@
-package com.example.tanya.tatianaryabova;
+package com.example.tanya.tatianaryabova.models;
 
 public class Category {
     private final int id;

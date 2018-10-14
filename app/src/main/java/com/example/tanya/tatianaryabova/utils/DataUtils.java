@@ -1,4 +1,7 @@
-package com.example.tanya.tatianaryabova;
+package com.example.tanya.tatianaryabova.utils;
+
+import com.example.tanya.tatianaryabova.models.Category;
+import com.example.tanya.tatianaryabova.models.News;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -131,6 +134,11 @@ public class DataUtils {
                         + "\"When I first started gigging around the pubs and clubs up North, two songs that were always in my set "
                         + "were Goodnight Girl and Love Is All Around.\""
         ));
+
+        try {
+            Thread.sleep(1000);
+        }catch (InterruptedException e) {
+        }
 
         return news;
     }
