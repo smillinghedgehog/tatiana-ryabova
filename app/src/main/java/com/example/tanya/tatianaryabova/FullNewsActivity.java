@@ -18,48 +18,33 @@ import java.util.List;
 
 public class FullNewsActivity extends AppCompatActivity {
 
+    public static final String POSITION = "POSITION";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_full_news);
 
-        int position = getIntent().getIntExtra(getString(R.string.position), 1);
+        int position = getIntent().getIntExtra(POSITION, 1);
 
-        new Thread(new LoadingRunnable(this, position)).start();
+        new Thread(new LoadingRunnable(this, new UIFullNewsRunnable(this, position))).start();
     }
 
-    private static class LoadingRunnable implements Runnable {
-        @Nullable
-        private final WeakReference<Activity> activityWeakReference;
-        private int position;
 
-        LoadingRunnable(Activity activity, int position){
+    private static class UIFullNewsRunnable extends UIRunnable{
+        private News newsOne;
+        private int position;
+        private final WeakReference<Activity> activityWeakReference;
+        UIFullNewsRunnable(Activity activity, int position){
             activityWeakReference = new WeakReference<Activity>(activity);
             this.position = position;
         }
 
         @Override
         public void run(){
-            List<News> news = DataUtils.generateNews();
+            newsOne = news.get(position);
             Activity activity = activityWeakReference.get();
-            if (activity != null){
-                activity.runOnUiThread(new UIRunnable(news.get(position), activity));
-            }
-        }
-    }
-
-    private static class UIRunnable implements Runnable{
-        private News newsOne;
-        private final WeakReference<Activity> activityWeakReference;
-        UIRunnable(News newsOne, Activity activity){
-            this.newsOne = newsOne;
-            activityWeakReference = new WeakReference<Activity>(activity);
-        }
-
-        @Override
-        public void run(){
-            Activity activity = activityWeakReference.get();
-            if (activity != null) {
+            if (activity != null & newsOne != null) {
                 ImageView photo = activity.findViewById(R.id.full_news_photo);
                 Glide.with(activity).load(newsOne.getImageUrl()).into(photo);
                 TextView title = activity.findViewById(R.id.title_full);

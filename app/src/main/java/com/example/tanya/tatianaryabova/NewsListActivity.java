@@ -24,6 +24,8 @@ import java.util.List;
 
 public class NewsListActivity extends AppCompatActivity {
 
+    private List<News> news;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,7 +37,7 @@ public class NewsListActivity extends AppCompatActivity {
             spanCount = 2;
         }
 
-        new Thread(new LoadingRunnable(this)).start();
+        new Thread(new LoadingRunnable(this, new UINewsRunnable(this))).start();
 
         RecyclerView recyclerView = findViewById(R.id.news_activity);
         recyclerView.setLayoutManager(new GridLayoutManager(this, spanCount));
@@ -58,27 +60,10 @@ public class NewsListActivity extends AppCompatActivity {
         return true;
     }
 
-    private static class LoadingRunnable implements Runnable {
-        @Nullable private final WeakReference<Activity> activityWeakReference;
-        LoadingRunnable(Activity activity){
-            activityWeakReference = new WeakReference<Activity>(activity);
-        }
 
-        @Override
-        public void run(){
-            List<News> news = DataUtils.generateNews();
-            Activity activity = activityWeakReference.get();
-            if (activity != null){
-                activity.runOnUiThread(new UIRunnable(news, activity));
-            }
-        }
-    }
-
-    private static class UIRunnable implements Runnable{
-        private List<News> news;
+    private static class UINewsRunnable extends UIRunnable{
         private final WeakReference<Activity> activityWeakReference;
-        UIRunnable(List<News> news, Activity activity){
-            this.news = news;
+        UINewsRunnable(Activity activity){
             activityWeakReference = new WeakReference<Activity>(activity);
         }
 

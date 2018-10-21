@@ -29,8 +29,8 @@ public class Ex4Activity extends AppCompatActivity {
     }
 
     @Override
-    public void onPause(){
-        super.onPause();
+    public void onStop(){
+        super.onStop();
         isRunning = false;
     }
 

@@ -20,6 +20,7 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapte
     private final List<News> news;
     private final Context context;
     private final LayoutInflater inflater;
+    private final String POSITION = "POSITION";
 
     public NewsRecyclerAdapter(Context context, List<News> news) {
         this.news = news;
@@ -52,7 +53,7 @@ public class NewsRecyclerAdapter extends RecyclerView.Adapter<NewsRecyclerAdapte
 
         private void openFullNews(int position){
             Intent openFull = new Intent(context, FullNewsActivity.class);
-            openFull.putExtra("POSITION", position);
+            openFull.putExtra(POSITION, position);
             context.startActivity(openFull);
         }
 
