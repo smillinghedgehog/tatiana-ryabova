@@ -38,6 +38,8 @@
                 android:textColor="@android:color/black"
                 android:textSize="@dimen/text_size"
                 android:textStyle="bold"
+                android:maxLines="3"
+                android:ellipsize="end"
                 tools:text="@tools:sample/full_names" />
 
             <TextView
@@ -46,6 +48,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/margin_small"
                 android:maxLines="5"
+                android:ellipsize="end"
                 android:textColor="@android:color/black"
                 android:textSize="@dimen/preview_text_size"
                 tools:text="@tools:sample/full_names" />

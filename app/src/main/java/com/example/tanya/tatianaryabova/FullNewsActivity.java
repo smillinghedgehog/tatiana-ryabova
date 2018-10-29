@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.format.DateUtils;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -18,44 +19,21 @@ import java.util.List;
 
 public class FullNewsActivity extends AppCompatActivity {
 
-    public static final String POSITION = "POSITION";
+    private String NEWS_URL = "NEWS_URL";
+    private String SECTION = "SECTION";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_full_news);
 
-        int position = getIntent().getIntExtra(POSITION, 1);
+        String newsUrl = getIntent().getStringExtra(NEWS_URL);
+        String section = getIntent().getStringExtra(SECTION);
 
-        new Thread(new LoadingRunnable(this, new UIFullNewsRunnable(this, position))).start();
+        WebView fullNews = new WebView(this);
+        setContentView(fullNews);
+        fullNews.loadUrl(newsUrl);
+        setTitle(section);
     }
 
-
-    private static class UIFullNewsRunnable extends UIRunnable{
-        private News newsOne;
-        private int position;
-        private final WeakReference<Activity> activityWeakReference;
-        UIFullNewsRunnable(Activity activity, int position){
-            activityWeakReference = new WeakReference<Activity>(activity);
-            this.position = position;
-        }
-
-        @Override
-        public void run(){
-            newsOne = news.get(position);
-            Activity activity = activityWeakReference.get();
-            if (activity != null & newsOne != null) {
-                ImageView photo = activity.findViewById(R.id.full_news_photo);
-                Glide.with(activity).load(newsOne.getImageUrl()).into(photo);
-                TextView title = activity.findViewById(R.id.title_full);
-                title.setText(newsOne.getTitle());
-                TextView date = activity.findViewById(R.id.date_full);
-                date.setText(DateUtils.getRelativeDateTimeString(activity, newsOne.getPublishDate().getTime(), DateUtils.MINUTE_IN_MILLIS, DateUtils.WEEK_IN_MILLIS, DateUtils.FORMAT_SHOW_YEAR));
-                TextView text = activity.findViewById(R.id.text_full);
-                text.setText(newsOne.getFullText());
-                activity.setTitle(newsOne.getCategory().getName());
-                activity.findViewById(R.id.progress_bar).setVisibility(View.GONE);
-            }
-        }
-    }
 }

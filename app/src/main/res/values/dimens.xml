@@ -13,4 +13,6 @@
     <dimen name="preview_text_size">14sp</dimen>
     <dimen name="date_text_size">12sp</dimen>
     <dimen name="news_item_height_land">265dp</dimen>
+    <dimen name="spinner_padding">8dp</dimen>
+    <dimen name="label_text_size">20sp</dimen>
 </resources>
