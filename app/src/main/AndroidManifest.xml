@@ -16,16 +16,15 @@
             android:label="@string/about_activity" />
         <activity
             android:name=".NewsListActivity"
-            android:label="@string/news_activity">
+            android:label=""
+            android:theme="@style/MainTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".NewsItem" />
         <activity android:name=".FullNewsActivity" />
-        <activity android:name=".Ex4Activity"/>
     </application>
 
 </manifest>

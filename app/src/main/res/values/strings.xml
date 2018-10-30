@@ -11,5 +11,33 @@
     <string name="news_activity">NY Times</string>
     <string name="about_activity">About</string>
     <string name="position">POSITION</string>
+    <string-array name="section_array">
+        <item>Home</item>
+        <item>Opinion</item>
+        <item>World</item>
+        <item>National</item>
+        <item>Politics</item>
+        <item>Upshot</item>
+        <item>NYRegion</item>
+        <item>Business</item>
+        <item>Technology</item>
+        <item>Science</item>
+        <item>Health</item>
+        <item>Sports</item>
+        <item>Arts</item>
+        <item>Books</item>
+        <item>Movies</item>
+        <item>Theater</item>
+        <item>Sunday Review</item>
+        <item>Fashion</item>
+        <item>TMagazine</item>
+        <item>Food</item>
+        <item>Travel</item>
+        <item>Magazine</item>
+        <item>Real Estate</item>
+        <item>Automobiles</item>
+        <item>Obituaries</item>
+        <item>Insider</item>
+    </string-array>
 </resources>
 
