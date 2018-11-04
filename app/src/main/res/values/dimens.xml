@@ -15,4 +15,8 @@
     <dimen name="news_item_height_land">265dp</dimen>
     <dimen name="spinner_padding">8dp</dimen>
     <dimen name="label_text_size">20sp</dimen>
+    <dimen name="intro_image_width">300dp</dimen>
+    <dimen name="intro_image_height">350dp</dimen>
+    <dimen name="intro_text_size">20sp</dimen>
+    <dimen name="get_started_btn">150dp</dimen>
 </resources>
