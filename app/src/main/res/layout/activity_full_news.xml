@@ -39,6 +39,17 @@
             android:textSize="@dimen/text_size"
             android:textStyle="bold"/>
 
+        <EditText
+            android:id="@+id/title_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/background_light"
+            android:padding="@dimen/margin_small"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/text_size"
+            android:textStyle="bold"
+            android:visibility="gone"/>
+
     </android.support.design.widget.AppBarLayout>
 
     <android.support.v4.widget.NestedScrollView
@@ -66,6 +77,25 @@
                 android:layout_height="wrap_content"
                 android:textColor="@android:color/black"
                 android:textSize="@dimen/preview_text_size" />
+
+            <EditText
+                android:id="@+id/text_full_edit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/black"
+                android:textSize="@dimen/preview_text_size"
+                android:visibility="gone"/>
+
+            <Button
+                android:id="@+id/save_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/colorPrimaryDark"
+                android:textColor="@android:color/white"
+                android:text="@string/save_button"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="@dimen/margin_big"
+                android:visibility="gone"/>
 
 
         </LinearLayout>

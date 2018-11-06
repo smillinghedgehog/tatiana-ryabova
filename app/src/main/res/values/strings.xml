@@ -13,6 +13,8 @@
     <string name="position">POSITION</string>
     <string name="intro">Read all the breaking news in one app</string>
     <string name="start_button">GET STARTED</string>
+    <string name="edit_activity">Edit</string>
+    <string name="save_button">SAVE</string>
     <string-array name="section_array">
         <item>Home</item>
         <item>Opinion</item>

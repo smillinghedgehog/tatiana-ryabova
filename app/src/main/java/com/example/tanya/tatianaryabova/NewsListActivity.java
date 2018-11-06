@@ -3,6 +3,7 @@ package com.example.tanya.tatianaryabova;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -34,10 +35,11 @@ public class NewsListActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private NewsRecyclerAdapter adapter;
     private ProgressBar progressBar;
-    private String homeSection = "home";
     private Spinner spinner;
+    private FloatingActionButton updateBtn;
     private String[] sections = new String[26];
     private int sectionPosition = 0;
+    private Converter converter;
 
     @Nullable
     private Call<DefaultResponse<List<NewsDTO>>> loadRequest;
@@ -52,7 +54,7 @@ public class NewsListActivity extends AppCompatActivity {
     @Override
     protected void onStart(){
         super.onStart();
-        setupUX();
+       // setupUX();
     }
 
     @Override
@@ -68,6 +70,7 @@ public class NewsListActivity extends AppCompatActivity {
             case R.id.about_menu_item:
                 Intent intent = new Intent(this, AboutActivity.class);
                 startActivity(intent);
+
         }
         return true;
     }
@@ -79,6 +82,8 @@ public class NewsListActivity extends AppCompatActivity {
         setSupportActionBar((Toolbar)findViewById(R.id.news_toolbar));
         setSpinner();
         setSections();
+        setUpdate();
+        converter = new Converter(this);
     }
 
     private void setupUX(){
@@ -97,12 +102,20 @@ public class NewsListActivity extends AppCompatActivity {
                 final List<NewsDTO> results = body.getResults();
 
                 adapter.addNews(results);
+
+                converter.toDatabase(results);
+
                 progressBar.setVisibility(View.INVISIBLE);
             }
 
             @Override
             public void onFailure(Call<DefaultResponse<List<NewsDTO>>> call, Throwable t) {
                 Log.v("MESSAGE", t.getMessage());
+
+                List<NewsDTO> resultsFromDataBase = converter.fromDatabase();
+                if(resultsFromDataBase != null){
+                    adapter.addNews(resultsFromDataBase);
+                }
             }
         });
     }
@@ -136,6 +149,18 @@ public class NewsListActivity extends AppCompatActivity {
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
 
+            }
+        });
+    }
+
+    private void setUpdate(){
+        updateBtn = findViewById(R.id.update_btn);
+        updateBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                progressBar.setVisibility(View.VISIBLE);
+                loadNews(sections[sectionPosition]);
+                progressBar.setVisibility(View.INVISIBLE);
             }
         });
     }

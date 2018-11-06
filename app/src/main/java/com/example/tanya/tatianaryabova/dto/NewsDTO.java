@@ -2,6 +2,7 @@ package com.example.tanya.tatianaryabova.dto;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -44,4 +45,23 @@ public class NewsDTO {
     public List<MultimediaDTO> getMultimedia(){
         return multimedia;
     }
+
+    public void setMultimediaUrl(String url) {
+        this.multimedia = new ArrayList<>();
+        MultimediaDTO multimediaDTO = new MultimediaDTO();
+        multimediaDTO.setUrl(url);
+        this.multimedia.add(multimediaDTO);
+        this.multimedia.add(multimediaDTO);
+        this.multimedia.add(multimediaDTO);
+    }
+
+    public void setSection(String section) { this.section = section; }
+
+    public void setTitle(String title) { this.title = title; }
+
+    public void setUrl(String url) { this.url = url; }
+
+    public void setPublishedDate(Date date) { this.publishedDate = date; }
+
+    public void setPreview(String preview) { this.preview = preview; }
 }

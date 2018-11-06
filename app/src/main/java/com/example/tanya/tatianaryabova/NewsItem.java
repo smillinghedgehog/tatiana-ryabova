@@ -36,9 +36,9 @@ public class NewsItem extends RecyclerView.ViewHolder implements View.OnClickLis
     private TextView date;
     private Context context;
     private String newsUrl;
+    private String newsTitle;
 
-    private String NEWS_URL = "NEWS_URL";
-    private String SECTION = "SECTION";
+    private String NEWS_ID = "NEWS_ID";
 
     public static NewsItem create(@NonNull ViewGroup parent, RequestManager glideRequestManager, Context context){
         final View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_news_item, parent, false);
@@ -79,13 +79,13 @@ public class NewsItem extends RecyclerView.ViewHolder implements View.OnClickLis
         preview.setText(news.getPreview());
         date.setText(DateUtils.getRelativeDateTimeString(context, news.getPublishedDate().getTime(), DateUtils.MINUTE_IN_MILLIS, DateUtils.WEEK_IN_MILLIS, DateUtils.FORMAT_SHOW_YEAR));
         newsUrl = news.getUrl();
+        newsTitle = news.getTitle();
     }
 
     @Override
     public void onClick(View view){
         Intent openFull = new Intent(context, FullNewsActivity.class);
-        openFull.putExtra(NEWS_URL, newsUrl);
-        openFull.putExtra(SECTION, category.getText());
+        openFull.putExtra(NEWS_ID, newsTitle + newsUrl);
         context.startActivity(openFull);
     }
 
