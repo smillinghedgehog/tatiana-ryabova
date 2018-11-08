@@ -1,4 +1,4 @@
-package com.example.tanya.tatianaryabova;
+package com.example.tanya.tatianaryabova.persistency;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;

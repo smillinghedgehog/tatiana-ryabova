@@ -23,6 +23,7 @@ import com.bumptech.glide.Glide;
 import com.example.tanya.tatianaryabova.dto.NewsDTO;
 import com.example.tanya.tatianaryabova.network.DefaultResponse;
 import com.example.tanya.tatianaryabova.network.RestApi;
+import com.example.tanya.tatianaryabova.persistency.Converter;
 
 import java.util.List;
 
@@ -116,6 +117,8 @@ public class NewsListActivity extends AppCompatActivity {
                 if(resultsFromDataBase != null){
                     adapter.addNews(resultsFromDataBase);
                 }
+
+                progressBar.setVisibility(View.INVISIBLE);
             }
         });
     }

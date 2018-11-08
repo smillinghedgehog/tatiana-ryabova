@@ -54,24 +54,26 @@ public class NewsItem extends RecyclerView.ViewHolder implements View.OnClickLis
     }
 
     public void bindItem(@NonNull NewsDTO news){
-        if(news.getMultimedia().size() != 0) {
-            imageLoader.load(news.getMultimediaUrl())
-                    .listener(new RequestListener<Drawable>() {
-                        @Override
-                        public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
-                            return false;
-                        }
+        if(news.getMultimedia() != null) {
+            if (news.getMultimedia().size() != 0) {
+                imageLoader.load(news.getMultimediaUrl())
+                        .listener(new RequestListener<Drawable>() {
+                            @Override
+                            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                                return false;
+                            }
 
-                        @Override
-                        public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-                            return false;
-                        }
-                    })
-                    .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.AUTOMATIC))
-                    .thumbnail(0.3f)
-                    .into(photo);
-        } else{
-            photo.setVisibility(View.GONE);
+                            @Override
+                            public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                                return false;
+                            }
+                        })
+                        .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.AUTOMATIC))
+                        .thumbnail(0.3f)
+                        .into(photo);
+            } else {
+                photo.setVisibility(View.GONE);
+            }
         }
 
         category.setText(news.getSection());

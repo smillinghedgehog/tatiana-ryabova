@@ -1,4 +1,4 @@
-package com.example.tanya.tatianaryabova;
+package com.example.tanya.tatianaryabova.persistency;
 
 import android.arch.persistence.room.Database;
 import android.arch.persistence.room.Room;

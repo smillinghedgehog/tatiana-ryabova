@@ -1,7 +1,6 @@
-package com.example.tanya.tatianaryabova;
+package com.example.tanya.tatianaryabova.persistency;
 
 import android.content.Context;
-import android.support.annotation.Nullable;
 
 import com.example.tanya.tatianaryabova.dto.NewsDTO;
 
@@ -38,6 +37,18 @@ public class Converter {
         AppDatabase db = AppDatabase.getAppDatabase(context);
 
         return db.newsDao().getNewsById(id);
+    }
+
+    public void deleteNewsByID(String id){
+        AppDatabase db = AppDatabase.getAppDatabase(context);
+
+        db.newsDao().delete(findNewsById(id));
+    }
+
+    public void insertNews(NewsEntity newsEntity){
+        AppDatabase db = AppDatabase.getAppDatabase(context);
+
+        db.newsDao().insert(newsEntity);
     }
 
     private List<NewsEntity> getNewsEntityList(List<NewsDTO> newsDTOList){
