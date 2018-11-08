@@ -11,6 +11,11 @@
     <string name="news_activity">NY Times</string>
     <string name="about_activity">About</string>
     <string name="position">POSITION</string>
+    <string name="intro">Read all the breaking news in one app</string>
+    <string name="start_button">GET STARTED</string>
+    <string name="edit_activity">Edit</string>
+    <string name="save_button">SAVE</string>
+    <string name="delete_activity">Delete</string>
     <string-array name="section_array">
         <item>Home</item>
         <item>Opinion</item>

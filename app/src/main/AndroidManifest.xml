@@ -7,7 +7,7 @@
     <application
         android:allowBackup="true"
         android:icon="@drawable/hedgehog"
-        android:label="@string/app_name"
+        android:label="@string/news_activity"
         android:roundIcon="@drawable/hedgehog"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
@@ -18,13 +18,17 @@
             android:name=".NewsListActivity"
             android:label=""
             android:theme="@style/MainTheme">
+        </activity>
+        <activity android:name=".FullNewsActivity" />
+        <activity android:name=".IntroActivity"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".FullNewsActivity" />
     </application>
 
 </manifest>

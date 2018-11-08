@@ -37,6 +37,17 @@
             android:layout_width="@dimen/margin_super"
             android:layout_height="@dimen/margin_super"
             android:layout_gravity="center"/>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/update_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|right"
+            android:layout_margin="@dimen/margin_big"
+            android:backgroundTint="@color/colorPrimaryDark"
+            android:src="@drawable/update"
+            app:backgroundTint="@color/colorPrimaryDark"
+            tools:backgroundTint="@color/colorPrimaryDark" />
     </FrameLayout>
 
 
