@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".NewsListActivity">
+    tools:context=".NewsListFragment">
 
     <android.support.v7.widget.Toolbar
         android:layout_width="match_parent"
@@ -18,7 +18,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:titleTextColor="@android:color/white"
-            android:id="@+id/sections"></Spinner>
+            android:id="@+id/sections"/>
     </android.support.v7.widget.Toolbar>
 
     <FrameLayout
@@ -30,7 +30,7 @@
             android:layout_height="match_parent"
             android:id="@+id/news_activity"
             app:layoutManager="android.support.v7.widget.GridLayoutManager"
-            android:clipToPadding="true"></android.support.v7.widget.RecyclerView>
+            android:clipToPadding="true"/>
 
         <ProgressBar
             android:id="@+id/progress_bar"

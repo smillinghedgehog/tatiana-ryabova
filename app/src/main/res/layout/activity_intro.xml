@@ -11,21 +11,16 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <LinearLayout
+        <android.support.v4.view.ViewPager
+            android:id="@+id/intro_view_pager"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="top"
-            android:gravity="center_horizontal">
+            android:layout_height="@dimen/intro_image_height"/>
 
-            <ImageView
-                android:layout_width="@dimen/intro_image_width"
-                android:layout_height="@dimen/intro_image_height"
-                android:layout_gravity="center"
-                android:layout_marginTop="@dimen/margin_big"
-                android:layout_marginBottom="@dimen/margin_small"
-                android:src="@drawable/screenshot_intro" />
-
-        </LinearLayout>
+        <me.relex.circleindicator.CircleIndicator
+            android:id="@+id/intro_circle_indicator"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            app:ci_drawable="@color/colorPrimaryDark"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -46,6 +41,11 @@
             android:backgroundTint="@color/colorPrimaryDark"
             android:text="@string/start_button"
             android:textColor="@android:color/white" />
+
+        <FrameLayout
+            android:id="@+id/intro_frame"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
 
     </LinearLayout>
 

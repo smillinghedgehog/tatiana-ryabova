@@ -1,19 +1,25 @@
 package com.example.tanya.tatianaryabova;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ProgressBar;
@@ -25,13 +31,15 @@ import com.example.tanya.tatianaryabova.network.DefaultResponse;
 import com.example.tanya.tatianaryabova.network.RestApi;
 import com.example.tanya.tatianaryabova.persistency.Converter;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class NewsListActivity extends AppCompatActivity {
+public class NewsListFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private NewsRecyclerAdapter adapter;
@@ -41,35 +49,38 @@ public class NewsListActivity extends AppCompatActivity {
     private String[] sections = new String[26];
     private int sectionPosition = 0;
     private Converter converter;
+    private View view;
 
     @Nullable
     private Call<DefaultResponse<List<NewsDTO>>> loadRequest;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_news_list);
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             ViewGroup container,
+                             Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.activity_news_list, container, false);
+        return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         setupUI();
     }
 
     @Override
-    protected void onStart(){
-        super.onStart();
-       // setupUX();
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.menu, menu);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu){
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu, menu);
-        return true;
-    }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
         switch (item.getItemId()){
             case R.id.about_menu_item:
-                Intent intent = new Intent(this, AboutActivity.class);
+                Intent intent = new Intent(getActivity(), AboutActivity.class);
                 startActivity(intent);
 
         }
@@ -77,18 +88,16 @@ public class NewsListActivity extends AppCompatActivity {
     }
 
     private void setupUI(){
-        recyclerView = findViewById(R.id.news_activity);
-        progressBar = findViewById(R.id.progress_bar);
+        view = getView();
+        recyclerView = view.findViewById(R.id.news_activity);
+        progressBar = view.findViewById(R.id.progress_bar);
         setRecyclerView();
-        setSupportActionBar((Toolbar)findViewById(R.id.news_toolbar));
+        AppCompatActivity activity = (AppCompatActivity) getActivity();
+        activity.setSupportActionBar((Toolbar)view.findViewById(R.id.news_toolbar));
         setSpinner();
         setSections();
         setUpdate();
-        converter = new Converter(this);
-    }
-
-    private void setupUX(){
-        loadNews(sections[sectionPosition]);
+        converter = new Converter(getActivity());
     }
 
     private void loadNews(String section){
@@ -102,7 +111,16 @@ public class NewsListActivity extends AppCompatActivity {
 
                 final List<NewsDTO> results = body.getResults();
 
+                Collections.sort(results, new Comparator<NewsDTO>() {
+                            @Override
+                            public int compare(NewsDTO newsDTO, NewsDTO t1) {
+                                return t1.getPublishedDate().compareTo(newsDTO.getPublishedDate());
+                            }
+                        });
+
                 adapter.addNews(results);
+
+                recyclerView.scrollToPosition(0);
 
                 converter.toDatabase(results);
 
@@ -130,22 +148,22 @@ public class NewsListActivity extends AppCompatActivity {
             spanCount = 2;
         }
 
-        recyclerView.setLayoutManager(new GridLayoutManager(this, spanCount));
-        adapter = new NewsRecyclerAdapter(this, Glide.with(this));
+        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), spanCount));
+        adapter = new NewsRecyclerAdapter(getActivity(), Glide.with(this));
         recyclerView.setAdapter(adapter);
 
     }
 
     private void setSpinner(){
-        spinner = findViewById(R.id.sections);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.section_array, R.layout.activity_spinner_main_item);
+        spinner = view.findViewById(R.id.sections);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(), R.array.section_array, R.layout.activity_spinner_main_item);
         adapter.setDropDownViewResource(R.layout.activity_spinner_item);
         spinner.setAdapter(adapter);
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                loadNews(sections[i]);
+               // loadNews(sections[i]);
                 sectionPosition = i;
             }
 
@@ -157,7 +175,7 @@ public class NewsListActivity extends AppCompatActivity {
     }
 
     private void setUpdate(){
-        updateBtn = findViewById(R.id.update_btn);
+        updateBtn = view.findViewById(R.id.update_btn);
         updateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

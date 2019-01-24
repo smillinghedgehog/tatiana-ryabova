@@ -40,12 +40,12 @@ public class NewsItem extends RecyclerView.ViewHolder implements View.OnClickLis
 
     private String NEWS_ID = "NEWS_ID";
 
-    public static NewsItem create(@NonNull ViewGroup parent, RequestManager glideRequestManager, Context context){
+    public static NewsItem create(@NonNull ViewGroup parent, RequestManager glideRequestManager, Context context) {
         final View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_news_item, parent, false);
         return new NewsItem(view, glideRequestManager, context);
     }
 
-    private NewsItem(@NonNull View itemView, RequestManager glideRequestManager, Context context){
+    private NewsItem(@NonNull View itemView, RequestManager glideRequestManager, Context context) {
         super(itemView);
         this.imageLoader = glideRequestManager;
         this.context = context;
@@ -53,27 +53,14 @@ public class NewsItem extends RecyclerView.ViewHolder implements View.OnClickLis
         itemView.setOnClickListener(this);
     }
 
-    public void bindItem(@NonNull NewsDTO news){
-        if(news.getMultimedia() != null) {
-            if (news.getMultimedia().size() != 0) {
-                imageLoader.load(news.getMultimediaUrl())
-                        .listener(new RequestListener<Drawable>() {
-                            @Override
-                            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
-                                return false;
-                            }
-
-                            @Override
-                            public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-                                return false;
-                            }
-                        })
-                        .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.AUTOMATIC))
-                        .thumbnail(0.3f)
-                        .into(photo);
-            } else {
-                photo.setVisibility(View.GONE);
-            }
+    public void bindItem(@NonNull NewsDTO news) {
+        if (news.getMultimedia() != null && news.getMultimedia().size() != 0) {
+            imageLoader.load(news.getMultimediaUrl())
+                    .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.AUTOMATIC))
+                    .thumbnail(0.3f)
+                    .into(photo);
+        } else {
+            photo.setVisibility(View.GONE);
         }
 
         category.setText(news.getSection());
@@ -85,13 +72,13 @@ public class NewsItem extends RecyclerView.ViewHolder implements View.OnClickLis
     }
 
     @Override
-    public void onClick(View view){
+    public void onClick(View view) {
         Intent openFull = new Intent(context, FullNewsActivity.class);
         openFull.putExtra(NEWS_ID, newsTitle + newsUrl);
         context.startActivity(openFull);
     }
 
-    private void findViews(@NonNull View itemView){
+    private void findViews(@NonNull View itemView) {
         photo = itemView.findViewById(R.id.image_news);
         category = itemView.findViewById(R.id.category);
         title = itemView.findViewById(R.id.title);

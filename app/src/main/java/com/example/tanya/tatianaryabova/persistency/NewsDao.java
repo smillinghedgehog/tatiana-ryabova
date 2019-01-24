@@ -11,7 +11,7 @@ import java.util.List;
 @Dao
 public interface NewsDao {
 
-    @Query("SELECT * FROM NewsEntity")
+    @Query("SELECT * FROM NewsEntity ORDER BY publishedDate DESC")
     List<NewsEntity> getAll();
 
     @Query("SELECT * FROM NewsEntity WHERE id = :id")
