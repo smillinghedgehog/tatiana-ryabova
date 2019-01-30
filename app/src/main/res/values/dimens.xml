@@ -19,4 +19,5 @@
     <dimen name="intro_image_height">350dp</dimen>
     <dimen name="intro_text_size">20sp</dimen>
     <dimen name="get_started_btn">150dp</dimen>
+    <dimen name="toolbar_margin">16dp</dimen>
 </resources>

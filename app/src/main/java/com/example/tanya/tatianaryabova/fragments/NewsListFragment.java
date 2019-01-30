@@ -1,18 +1,14 @@
-package com.example.tanya.tatianaryabova;
+package com.example.tanya.tatianaryabova.fragments;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -26,6 +22,9 @@ import android.widget.ProgressBar;
 import android.widget.Spinner;
 
 import com.bumptech.glide.Glide;
+import com.example.tanya.tatianaryabova.AboutActivity;
+import com.example.tanya.tatianaryabova.NewsRecyclerAdapter;
+import com.example.tanya.tatianaryabova.R;
 import com.example.tanya.tatianaryabova.dto.NewsDTO;
 import com.example.tanya.tatianaryabova.network.DefaultResponse;
 import com.example.tanya.tatianaryabova.network.RestApi;
@@ -50,6 +49,7 @@ public class NewsListFragment extends Fragment {
     private int sectionPosition = 0;
     private Converter converter;
     private View view;
+    private String newsID;
 
     @Nullable
     private Call<DefaultResponse<List<NewsDTO>>> loadRequest;
@@ -59,6 +59,7 @@ public class NewsListFragment extends Fragment {
                              ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.activity_news_list, container, false);
+        setHasOptionsMenu(true);
         return view;
     }
 
@@ -70,7 +71,6 @@ public class NewsListFragment extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.menu, menu);
     }
 
@@ -92,12 +92,13 @@ public class NewsListFragment extends Fragment {
         recyclerView = view.findViewById(R.id.news_activity);
         progressBar = view.findViewById(R.id.progress_bar);
         setRecyclerView();
-        AppCompatActivity activity = (AppCompatActivity) getActivity();
-        activity.setSupportActionBar((Toolbar)view.findViewById(R.id.news_toolbar));
         setSpinner();
         setSections();
         setUpdate();
         converter = new Converter(getActivity());
+        progressBar.setVisibility(View.VISIBLE);
+        loadNews(sections[sectionPosition]);
+        progressBar.setVisibility(View.INVISIBLE);
     }
 
     private void loadNews(String section){
@@ -125,6 +126,16 @@ public class NewsListFragment extends Fragment {
                 converter.toDatabase(results);
 
                 progressBar.setVisibility(View.INVISIBLE);
+
+                if(getActivity().getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                    newsID = results.get(0).getTitle() + results.get(0).getUrl();
+                    FullNewsFragment firstNewsFragment = FullNewsFragment.newInstance(newsID);
+                    getActivity().getSupportFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.main_frame, firstNewsFragment)
+                            .addToBackStack(null)
+                            .commit();
+                }
             }
 
             @Override
@@ -142,11 +153,7 @@ public class NewsListFragment extends Fragment {
     }
 
     private void setRecyclerView(){
-        int orientation = getResources().getConfiguration().orientation;
         int spanCount = 1;
-        if (orientation == Configuration.ORIENTATION_LANDSCAPE){
-            spanCount = 2;
-        }
 
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), spanCount));
         adapter = new NewsRecyclerAdapter(getActivity(), Glide.with(this));
@@ -155,7 +162,8 @@ public class NewsListFragment extends Fragment {
     }
 
     private void setSpinner(){
-        spinner = view.findViewById(R.id.sections);
+        getActivity().findViewById(R.id.news_toolbar).setVisibility(View.VISIBLE);
+        spinner = getActivity().findViewById(R.id.sections);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getActivity(), R.array.section_array, R.layout.activity_spinner_main_item);
         adapter.setDropDownViewResource(R.layout.activity_spinner_item);
         spinner.setAdapter(adapter);
@@ -163,7 +171,7 @@ public class NewsListFragment extends Fragment {
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-               // loadNews(sections[i]);
+                loadNews(sections[i]);
                 sectionPosition = i;
             }
 

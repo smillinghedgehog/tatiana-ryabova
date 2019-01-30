@@ -12,7 +12,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public final class RestApi {
 
     private static final String URL = "https://api.nytimes.com/";
-    private static final String API_KEY = "57f2bfb6d20d4915be254eaa6c206b8c";
+    private static final String API_KEY = "hx01dPvGG4AztB21CgER2rvco1gtlIzu";
 
     private static final int TIMEOUT_IN_SECONDS = 2;
     private static RestApi sRestApi;

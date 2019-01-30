@@ -16,6 +16,8 @@
     <string name="edit_activity">Edit</string>
     <string name="save_button">SAVE</string>
     <string name="delete_activity">Delete</string>
+    <string name="notification_title">Update</string>
+    <string name="notification_text">Updating news...</string>
     <string-array name="section_array">
         <item>Home</item>
         <item>Opinion</item>

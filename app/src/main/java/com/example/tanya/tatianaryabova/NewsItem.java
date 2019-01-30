@@ -1,16 +1,9 @@
 package com.example.tanya.tatianaryabova;
 
-import android.app.DownloadManager;
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,13 +11,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.RequestManager;
-import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.load.engine.GlideException;
-import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
-import com.bumptech.glide.request.target.Target;
 import com.example.tanya.tatianaryabova.dto.NewsDTO;
+import com.example.tanya.tatianaryabova.fragments.FullNewsFragment;
 
 public class NewsItem extends RecyclerView.ViewHolder implements View.OnClickListener {
 
@@ -39,6 +29,7 @@ public class NewsItem extends RecyclerView.ViewHolder implements View.OnClickLis
     private String newsTitle;
 
     private String NEWS_ID = "NEWS_ID";
+    private String TAG_FRAGMENT = "TAG_FRAGMENT";
 
     public static NewsItem create(@NonNull ViewGroup parent, RequestManager glideRequestManager, Context context) {
         final View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_news_item, parent, false);
@@ -73,9 +64,13 @@ public class NewsItem extends RecyclerView.ViewHolder implements View.OnClickLis
 
     @Override
     public void onClick(View view) {
-        Intent openFull = new Intent(context, FullNewsActivity.class);
-        openFull.putExtra(NEWS_ID, newsTitle + newsUrl);
-        context.startActivity(openFull);
+        FullNewsFragment fragment = FullNewsFragment.newInstance(newsTitle + newsUrl);
+        MainActivity activity = (MainActivity) context;
+        activity.getSupportFragmentManager()
+                .beginTransaction()
+                .addToBackStack(null)
+                .replace(R.id.main_frame, fragment, TAG_FRAGMENT)
+                .commit();
     }
 
     private void findViews(@NonNull View itemView) {

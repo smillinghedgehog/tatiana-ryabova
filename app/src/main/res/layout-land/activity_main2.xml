@@ -8,8 +8,9 @@
     tools:context=".MainActivity">
 
     <android.support.v7.widget.Toolbar
+        android:layout_marginTop="@dimen/toolbar_margin"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="?attr/actionBarSize"
         app:titleTextColor="@android:color/white"
         android:background="@color/colorPrimaryDark"
         android:id="@+id/news_toolbar">
@@ -21,9 +22,23 @@
             android:id="@+id/sections"/>
     </android.support.v7.widget.Toolbar>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+    <FrameLayout
+        android:id="@+id/list_frame"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"/>
+
     <FrameLayout
         android:id="@+id/main_frame"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
+        android:layout_weight="1"
         android:layout_height="match_parent"/>
+
+    </LinearLayout>
 
 </LinearLayout>

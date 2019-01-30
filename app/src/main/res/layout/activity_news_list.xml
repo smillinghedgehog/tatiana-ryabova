@@ -5,21 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".NewsListFragment">
-
-    <android.support.v7.widget.Toolbar
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:titleTextColor="@android:color/white"
-        android:background="@color/colorPrimaryDark"
-        android:id="@+id/news_toolbar">
-
-        <Spinner
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:titleTextColor="@android:color/white"
-            android:id="@+id/sections"/>
-    </android.support.v7.widget.Toolbar>
+    tools:context=".fragments.NewsListFragment">
 
     <FrameLayout
         android:layout_width="match_parent"

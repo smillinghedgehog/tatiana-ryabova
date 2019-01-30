@@ -1,80 +1,88 @@
-package com.example.tanya.tatianaryabova;
+package com.example.tanya.tatianaryabova.fragments;
 
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
-import android.support.v4.widget.NestedScrollView;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.text.format.DateUtils;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewTreeObserver;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.tanya.tatianaryabova.R;
 import com.example.tanya.tatianaryabova.persistency.Converter;
 import com.example.tanya.tatianaryabova.persistency.NewsEntity;
 
 import java.util.Date;
 
-public class FullNewsActivity extends AppCompatActivity {
+public class FullNewsFragment extends Fragment {
 
-    private String NEWS_ID = "NEWS_ID";
+    private static final String NEWS_ID = "NEWS_ID";
     private Converter converter;
     private TextView title;
     private TextView text;
     private String newsID;
     private NewsEntity news;
     private CoordinatorLayout root;
-    private ViewTreeObserver.OnGlobalLayoutListener listener;
-    private boolean isKeyboardOpened = false;
+
+    public static FullNewsFragment newInstance(String newsID){
+        FullNewsFragment fullNewsFragment = new FullNewsFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString(NEWS_ID, newsID);
+        fullNewsFragment.setArguments(bundle);
+
+        return fullNewsFragment;
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.activity_full_news, container, false);
+        newsID = getArguments().getString(NEWS_ID);
+        setHasOptionsMenu(true);
+        return view;
+    }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_full_news);
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        AppCompatActivity activity = (AppCompatActivity) getActivity();
+        if(getActivity().getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+            activity.setSupportActionBar((Toolbar) view.findViewById(R.id.full_news_toolbar));
+            activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            activity.getSupportActionBar().setDisplayShowHomeEnabled(true);
+            getActivity().findViewById(R.id.news_toolbar).setVisibility(View.GONE);
+            view.findViewById(R.id.full_news_toolbar).setVisibility(View.VISIBLE);
+        }else{
+            view.findViewById(R.id.full_news_toolbar).setVisibility(View.GONE);
+            getActivity().findViewById(R.id.news_toolbar).setVisibility(View.VISIBLE);
+        }
 
-        newsID = getIntent().getStringExtra(NEWS_ID);
-
-        converter = new Converter(this);
+        converter = new Converter(getActivity());
 
         openFull(newsID);
 
-        root = findViewById(R.id.full_news_layout);
-        root.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-            @Override
-            public void onGlobalLayout() {
-                int windowHeight = getResources().getDisplayMetrics().heightPixels;
-                int rootHeight = root.getHeight();
-
-                if (rootHeight < 0.6 * windowHeight && !isKeyboardOpened){
-                    isKeyboardOpened = true;
-                    ((NestedScrollView) findViewById(R.id.scroll_view)).scrollTo(0, windowHeight);
-                }
-            }
-        });
+        root = getActivity().findViewById(R.id.full_news_layout);
     }
 
     @Override
-    public boolean onSupportNavigateUp() {
-        onBackPressed();
-        return true;
-    }
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.menu_full_news, menu);
-        return true;
     }
 
     @Override
@@ -82,14 +90,14 @@ public class FullNewsActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.edit_menu_item:
                 title.setVisibility(View.GONE);
-                final EditText titleEdit = findViewById(R.id.title_edit);
+                final EditText titleEdit = getActivity().findViewById(R.id.title_edit);
                 titleEdit.setText(title.getText());
                 titleEdit.setVisibility(View.VISIBLE);
                 text.setVisibility(View.GONE);
-                final EditText textEdit = findViewById(R.id.text_full_edit);
+                final EditText textEdit = getActivity().findViewById(R.id.text_full_edit);
                 textEdit.setText(text.getText());
                 textEdit.setVisibility(View.VISIBLE);
-                final Button saveBtn = findViewById(R.id.save_btn);
+                final Button saveBtn = getActivity().findViewById(R.id.save_btn);
                 saveBtn.setVisibility(View.VISIBLE);
                 saveBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -120,7 +128,7 @@ public class FullNewsActivity extends AppCompatActivity {
             case R.id.delete_menu_item:
                 converter.deleteNewsByID(newsID);
 
-                Intent backToNews = new Intent(this, NewsListFragment.class);
+                Intent backToNews = new Intent(getActivity(), NewsListFragment.class);
                 startActivity(backToNews);
                 return true;
         }
@@ -131,19 +139,20 @@ public class FullNewsActivity extends AppCompatActivity {
         news = converter.findNewsById(newsID);
 
         if (news != null) {
-            ImageView photo = findViewById(R.id.full_news_photo);
+            ImageView photo = getActivity().findViewById(R.id.full_news_photo);
             if (news.getMultimediaUrl() != null) {
                 Glide.with(this).load(news.getMultimediaUrl()).into(photo);
             }
-            title = findViewById(R.id.title_full);
+            title = getActivity().findViewById(R.id.title_full);
             title.setText(news.getTitle());
-            TextView date = findViewById(R.id.date_full);
+            TextView date = getActivity().findViewById(R.id.date_full);
             Date publishedDate = new Date(news.getPublishedDate());
-            date.setText(DateUtils.getRelativeDateTimeString(this, publishedDate.getTime(), DateUtils.MINUTE_IN_MILLIS, DateUtils.WEEK_IN_MILLIS, DateUtils.FORMAT_SHOW_YEAR));
-            text = findViewById(R.id.text_full);
+            date.setText(DateUtils.getRelativeDateTimeString(getActivity(), publishedDate.getTime(), DateUtils.MINUTE_IN_MILLIS, DateUtils.WEEK_IN_MILLIS, DateUtils.FORMAT_SHOW_YEAR));
+            text = getActivity().findViewById(R.id.text_full);
             text.setText(news.getPreview());
-            this.setTitle(news.getSection());
-            findViewById(R.id.progress_bar).setVisibility(View.GONE);
+            Toolbar toolbar = getActivity().findViewById(R.id.full_news_toolbar);
+            toolbar.setTitle(news.getSection());
+            getActivity().findViewById(R.id.progress_bar).setVisibility(View.GONE);
         }
     }
 

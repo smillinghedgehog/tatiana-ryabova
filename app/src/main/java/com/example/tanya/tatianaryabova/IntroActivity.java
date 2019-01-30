@@ -12,6 +12,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.tanya.tatianaryabova.fragments.IntroFragment;
+import com.example.tanya.tatianaryabova.fragments.NewsListFragment;
+
 import me.relex.circleindicator.CircleIndicator;
 
 public class IntroActivity extends AppCompatActivity {

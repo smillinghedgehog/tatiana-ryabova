@@ -1,4 +1,4 @@
-package com.example.tanya.tatianaryabova;
+package com.example.tanya.tatianaryabova.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -8,6 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+
+import com.example.tanya.tatianaryabova.R;
 
 public class IntroFragment extends Fragment {
 
